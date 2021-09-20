@@ -64,4 +64,4 @@ class DIS():
 
     def save_model(self, sess, filename):
         param = sess.run(self.d_params)
-        pickle.dump(param, open(filename, 'w'))
+        pickle.dump(param, open(filename, 'wb'))
