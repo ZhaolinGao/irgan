@@ -1,6 +1,5 @@
 import tensorflow as tf
 from dis_model_dns import DIS
-import cPickle
 import numpy as np
 import multiprocessing
 
@@ -47,7 +46,7 @@ with open(workdir + 'movielens-100k-test.txt')as fin:
                 user_pos_test[uid] = [iid]
 
 all_users = user_pos_train.keys()
-all_users.sort()
+sorted(all_users)
 
 
 def generate_dns(sess, model, filename):
@@ -117,7 +116,7 @@ def simple_test(sess, model):
     result = np.array([0.] * 6)
     pool = multiprocessing.Pool(cores)
     batch_size = 128
-    test_users = user_pos_test.keys()
+    test_users = list(user_pos_test.keys())
     test_user_num = len(test_users)
     index = 0
     while True:
@@ -140,7 +139,7 @@ def simple_test(sess, model):
 
 def generate_uniform(filename):
     data = []
-    print 'uniform negative sampling...'
+    print('uniform negative sampling...')
     for u in user_pos_train:
         pos = user_pos_train[u]
         candidates = list(all_items - set(pos))
@@ -165,7 +164,7 @@ def main():
     sess.run(tf.global_variables_initializer())
 
     dis_log = open(workdir + 'dis_log_dns.txt', 'w')
-    print "dis ", simple_test(sess, discriminator)
+    print("dis ", simple_test(sess, discriminator))
     best_p5 = 0.
 
     # generate_uniform(DIS_TRAIN_FILE) # Uniformly sample negative examples
@@ -183,11 +182,11 @@ def main():
                                         discriminator.neg: [j]})
 
         result = simple_test(sess, discriminator)
-        print "epoch ", epoch, "dis: ", result
+        print("epoch ", epoch, "dis: ", result)
         if result[1] > best_p5:
             best_p5 = result[1]
             discriminator.save_model(sess, DIS_MODEL_FILE)
-            print "best P@5: ", best_p5
+            print("best P@5: ", best_p5)
 
         buf = '\t'.join([str(x) for x in result])
         dis_log.write(str(epoch) + '\t' + buf + '\n')
