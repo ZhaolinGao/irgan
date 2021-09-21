@@ -227,7 +227,7 @@ def main():
             user_pos_test[test_data[i, 0]] = [test_data[i, 1]]
 
     print("load model...")
-    param = pickle.load(open(workdir + "/model_dns.pkl"))
+    param = pickle.load(open(workdir + "/model_dns.pkl", 'rb'))
     generator = GEN(num_item, num_user, args.emb_dim, lamda=0.0 / args.batch_size, param=param, initdelta=args.init_delta,
                     learning_rate=0.001)
     discriminator = DIS(num_item, num_user, args.emb_dim, lamda=0.1 / args.batch_size, param=None, initdelta=args.init_delta,
@@ -241,8 +241,8 @@ def main():
     print("gen ", eval(sess, generator, train_mat, user_pos_test, num_user, num_item))
     print("dis ", eval(sess, discriminator, train_mat, user_pos_test, num_user, num_item))
 
-    dis_log = open(workdir + 'dis_log.txt', 'w')
-    gen_log = open(workdir + 'gen_log.txt', 'w')
+    dis_log = open(workdir + '/dis_log.txt', 'w')
+    gen_log = open(workdir + '/gen_log.txt', 'w')
 
     # minimax training
     best = [0.]
