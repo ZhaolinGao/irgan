@@ -77,14 +77,15 @@ def eval(sess, model, train_data, test_data, num_user, num_item):
     arr_ind_argsort = np.argsort(arr_ind)[np.arange(len(predictions)), ::-1]
     pred_list = ind[np.arange(len(predictions))[:, None], arr_ind_argsort]
 
-    recall = []
+    results = []
     for k in [5, 10, 20]:
-        recall.append(recall_at_k(test_data, pred_list, k))
+        results.append(recall_at_k(test_data, pred_list, k))
 
     all_ndcg = ndcg_func([*test_data.values()], pred_list[list(test_data.keys())])
-    ndcg = [all_ndcg[x-1] for x in [5, 10, 20]]
+    for x in [5, 10, 20]:
+        results.append(all_ndcg[x-1])
 
-    return recall, ndcg
+    return results
 
 
 # def dcg_at_k(r, k):
