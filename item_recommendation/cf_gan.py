@@ -261,7 +261,7 @@ def main():
                 if index + args.batch_size <= train_size + 1:
                     input_user, input_item, input_label = ut.get_batch_data(data, index, args.batch_size)
                 else:
-                    input_user, input_item, input_label = ut.get_batch_data(data, index, train_size - index + 1)
+                    input_user, input_item, input_label = ut.get_batch_data(data, index, train_size - index)
                 index += args.batch_size
 
                 _ = sess.run(discriminator.d_updates,
