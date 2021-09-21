@@ -142,7 +142,7 @@ def eval(sess, model, train_data, test_data, num_user, num_item):
 #     return ret
 
 
-def generate_for_d(sess, model, user_pos_train, num_item):
+def generate_for_d(sess, model, user_pos_train, num_user, num_item):
     data = []
 
     user_batch = list(range(num_user))
@@ -252,7 +252,7 @@ def main():
     for epoch in range(20):
         for d_epoch in range(100):
             if d_epoch % 5 == 0:
-                data = generate_for_d(sess, generator, user_pos_train, num_item)
+                data = generate_for_d(sess, generator, user_pos_train, num_user, num_item)
                 train_size = len(data)
             index = 1
             while True:
