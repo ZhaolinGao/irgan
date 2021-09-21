@@ -16,7 +16,7 @@ def parse_args():
                         help='dataset')
     return parser.parse_args()
 
-def generate_dns(sess, model, num_neg, all_items):
+def generate_dns(sess, model, num_neg, all_items, user_pos_train):
     data = []
     for u in user_pos_train:
         pos = user_pos_train[u]
@@ -63,7 +63,7 @@ def recall_at_k(actual, predicted, topk):
             true_users += 1
     assert num_users == true_users
     return sum_recall / true_users
-    
+
 def eval(sess, model, train_data, test_data, num_user, num_item):
     user_batch = list(range(num_user))
     predictions = sess.run(model.all_rating, {model.u: user_batch})
@@ -254,7 +254,7 @@ def main():
     # generate_uniform(DIS_TRAIN_FILE) # Uniformly sample negative examples
 
     for epoch in range(80):
-        data = generate_dns(sess, discriminator, args.num_neg, all_items)  # dynamic negative sample
+        data = generate_dns(sess, discriminator, args.num_neg, all_items, user_pos_train)  # dynamic negative sample
         for line in data:
             u = line[0]
             i = line[1]
