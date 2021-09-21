@@ -3,6 +3,7 @@ from dis_model_dns import DIS
 import numpy as np
 import multiprocessing
 import scipy.sparse as sp
+import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run IRGAN.")
