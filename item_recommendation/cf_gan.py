@@ -144,15 +144,16 @@ def eval(sess, model, train_data, test_data, num_user, num_item):
 
 def generate_for_d(sess, model, user_pos_train, num_item):
     data = []
+
+    user_batch = list(range(num_user))
+    ratings = sess.run(model.all_rating, {model.u: num_user})
+
     for u in user_pos_train:
         pos = user_pos_train[u]
 
-        rating = sess.run(model.all_rating, {model.u: [u]})
-        print(rating)
-        rating = np.array(rating[0]) / 0.2  # Temperature
+        rating = np.array(ratings[u])/1 # Temperature
         exp_rating = np.exp(rating)
         prob = exp_rating / np.sum(exp_rating)
-        print(np.sum(exp_rating))
 
         neg = np.random.choice(np.arange(num_item), size=len(pos), p=prob)
         for i in range(len(pos)):
