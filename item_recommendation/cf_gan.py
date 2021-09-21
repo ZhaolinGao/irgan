@@ -282,7 +282,7 @@ def main():
                 pn[pos] += sample_lambda * 1.0 / len(pos)
                 # Now, pn is the Pn in importance sampling, prob is generator distribution p_\theta
 
-                sample = np.random.choice(np.arange(ITEM_NUM), 2 * len(pos), p=pn)
+                sample = np.random.choice(np.arange(num_item), 2 * len(pos), p=pn)
                 ###########################################################################
                 # Get reward and adapt it with importance sampling
                 ###########################################################################
