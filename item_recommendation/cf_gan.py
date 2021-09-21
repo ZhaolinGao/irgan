@@ -146,7 +146,7 @@ def generate_for_d(sess, model, user_pos_train, num_user, num_item):
     data = []
 
     user_batch = list(range(num_user))
-    ratings = sess.run(model.all_rating, {model.u: num_user})
+    ratings = sess.run(model.all_rating, {model.u: user_batch})
 
     for u in user_pos_train:
         pos = user_pos_train[u]
