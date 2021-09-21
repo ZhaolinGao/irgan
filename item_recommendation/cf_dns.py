@@ -248,8 +248,8 @@ def main():
     sess.run(tf.global_variables_initializer())
 
     dis_log = open(workdir + 'dis_log_dns.txt', 'wb')
-    print("dis ", simple_test(sess, discriminator))
-    best_p5 = 0.
+    print("Before training:", eval(sess, discriminator, train_mat, user_pos_test, num_user, num_item))
+    best_p5 = [0.]
 
     # generate_uniform(DIS_TRAIN_FILE) # Uniformly sample negative examples
 
@@ -263,7 +263,7 @@ def main():
                          feed_dict={discriminator.u: [u], discriminator.pos: [i],
                                     discriminator.neg: [j]})
 
-        result = simple_test(sess, discriminator, train_mat, user_pos_test, num_user, num_item)
+        result = eval(sess, discriminator, train_mat, user_pos_test, num_user, num_item)
         print("epoch ", epoch, "dis: ", result)
         if sum(result) > sum(best_p5):
             best_p5 = result
