@@ -154,7 +154,7 @@ def generate_for_d(sess, model, user_pos_train, num_item):
 
         neg = np.random.choice(np.arange(num_item), size=len(pos), p=prob)
         for i in range(len(pos)):
-            data.append[u, pos[i], neg[i]]
+            data.append([u, pos[i], neg[i]])
 
     return data
 
