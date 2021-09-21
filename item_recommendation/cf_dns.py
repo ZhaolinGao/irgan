@@ -4,6 +4,7 @@ import numpy as np
 import multiprocessing
 import scipy.sparse as sp
 import argparse
+import pickle
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run IRGAN.")
