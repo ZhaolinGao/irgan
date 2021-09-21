@@ -263,8 +263,7 @@ def main():
             i = data[batch*args.batch_size:(batch+1)*args.batch_size, 1]
             j = data[batch*args.batch_size:(batch+1)*args.batch_size, 2]
             _ = sess.run(discriminator.d_updates,
-                         feed_dict={discriminator.u: [u], discriminator.pos: [i],
-                                    discriminator.neg: [j]})
+                         feed_dict={discriminator.u: u, discriminator.pos: i, discriminator.neg: j})
 
         result = eval(sess, discriminator, train_mat, user_pos_test, num_user, num_item)
         print("epoch ", epoch, "dis: ", result)
