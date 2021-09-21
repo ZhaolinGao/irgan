@@ -239,7 +239,7 @@ def main():
         else:
             user_pos_test[test_data[i, 0]] = [test_data[i, 1]]
 
-    DIS_MODEL_FILE = workdir + "model_dns_test.pkl"
+    DIS_MODEL_FILE = workdir + "model_dns.pkl"
 
     np.random.seed(70)
     param = None

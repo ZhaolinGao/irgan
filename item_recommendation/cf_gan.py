@@ -1,7 +1,6 @@
 import tensorflow as tf
 from dis_model import DIS
 from gen_model import GEN
-import cPickle
 import numpy as np
 import utils as ut
 import multiprocessing

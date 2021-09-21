@@ -1,5 +1,5 @@
 import tensorflow as tf
-import cPickle
+import pickle
 
 
 class GEN():
@@ -54,4 +54,4 @@ class GEN():
 
     def save_model(self, sess, filename):
         param = sess.run(self.g_params)
-        cPickle.dump(param, open(filename, 'w'))
+        pickle.dump(param, open(filename, 'wb'))
