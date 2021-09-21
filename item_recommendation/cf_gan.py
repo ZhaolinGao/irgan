@@ -16,7 +16,7 @@ def parse_args():
                         help='number of negatives')
     parser.add_argument('--dataset', type=str, default="TAFA-digital-music",
                         help='dataset')
-    parser.add_argument('--batch_size', type=int, default=16,
+    parser.add_argument('--batch_size', type=int, default=10000,
                         help='batch size')
     parser.add_argument('--init_delta', type=float, default=0.05,
                         help='inital embedding distribution')
@@ -148,6 +148,7 @@ def generate_for_d(sess, model, user_pos_train, num_item):
         pos = user_pos_train[u]
 
         rating = sess.run(model.all_rating, {model.u: [u]})
+        print(rating)
         rating = np.array(rating[0]) / 0.2  # Temperature
         exp_rating = np.exp(rating)
         prob = exp_rating / np.sum(exp_rating)
