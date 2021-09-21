@@ -142,7 +142,7 @@ def eval(sess, model, train_data, test_data, num_user, num_item):
 #     return ret
 
 
-def generate_for_d(sess, model, user_pos_train):
+def generate_for_d(sess, model, user_pos_train, num_item):
     data = []
     for u in user_pos_train:
         pos = user_pos_train[u]
@@ -152,7 +152,7 @@ def generate_for_d(sess, model, user_pos_train):
         exp_rating = np.exp(rating)
         prob = exp_rating / np.sum(exp_rating)
 
-        neg = np.random.choice(np.arange(ITEM_NUM), size=len(pos), p=prob)
+        neg = np.random.choice(np.arange(num_item), size=len(pos), p=prob)
         for i in range(len(pos)):
             data.append[u, pos[i], neg[i]]
 
@@ -249,7 +249,7 @@ def main():
     for epoch in range(20):
         for d_epoch in range(100):
             if d_epoch % 5 == 0:
-                data = generate_for_d(sess, generator, user_pos_train)
+                data = generate_for_d(sess, generator, user_pos_train, num_item)
                 train_size = len(data)
             index = 1
             while True:
