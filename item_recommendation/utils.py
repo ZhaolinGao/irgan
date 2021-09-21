@@ -10,18 +10,15 @@ def file_len(fname):
 
 
 # Get batch data from training set
-def get_batch_data(file, index, size):  # 1,5->1,2,3,4,5
+def get_batch_data(data, index, size):  # 1,5->1,2,3,4,5
     user = []
     item = []
     label = []
     for i in range(index, index + size):
-        line = linecache.getline(file, i)
-        line = line.strip()
-        line = line.split()
-        user.append(int(line[0]))
-        user.append(int(line[0]))
-        item.append(int(line[1]))
-        item.append(int(line[2]))
+        user.append(data[i][0])
+        user.append(data[i][0])
+        item.append(data[i][1])
+        item.append(data[i][2])
         label.append(1.)
         label.append(0.)
     return user, item, label

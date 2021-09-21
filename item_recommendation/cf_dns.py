@@ -14,6 +14,8 @@ def parse_args():
                         help='number of negatives')
     parser.add_argument('--dataset', type=str, default="TAFA-digital-music",
                         help='dataset')
+    parser.add_argument('--batch_size', type=int, default=10000,
+                        help='batch size')
     return parser.parse_args()
 
 def generate_dns(sess, model, num_neg, all_items, user_pos_train):
@@ -237,11 +239,11 @@ def main():
         else:
             user_pos_test[test_data[i, 0]] = [test_data[i, 1]]
 
-    DIS_MODEL_FILE = workdir + "model_dns.pkl"
+    DIS_MODEL_FILE = workdir + "model_dns_test.pkl"
 
     np.random.seed(70)
     param = None
-    discriminator = DIS(num_item, num_user, args.emb_dim, lamda=0.1, param=param, initdelta=0.05, learning_rate=0.05)
+    discriminator = DIS(num_item, num_user, args.emb_dim, lamda=1e-4, param=param, initdelta=0.05, learning_rate=0.05)
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
@@ -254,12 +256,12 @@ def main():
 
     # generate_uniform(DIS_TRAIN_FILE) # Uniformly sample negative examples
 
-    for epoch in range(80):
-        data = generate_dns(sess, discriminator, args.num_neg, all_items, user_pos_train)  # dynamic negative sample
-        for line in data:
-            u = line[0]
-            i = line[1]
-            j = line[2]
+    for epoch in range(1000):
+        data = np.array(generate_dns(sess, discriminator, args.num_neg, all_items, user_pos_train))  # dynamic negative sample
+        for batch in range(data.shape[0]//args.batch_size):
+            u = data[batch*args.batch_size:(batch+1)*args.batch_size, 0]
+            i = data[batch*args.batch_size:(batch+1)*args.batch_size, 1]
+            j = data[batch*args.batch_size:(batch+1)*args.batch_size, 2]
             _ = sess.run(discriminator.d_updates,
                          feed_dict={discriminator.u: [u], discriminator.pos: [i],
                                     discriminator.neg: [j]})
