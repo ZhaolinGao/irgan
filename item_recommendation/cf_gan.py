@@ -152,6 +152,7 @@ def generate_for_d(sess, model, user_pos_train, num_item):
         rating = np.array(rating[0]) / 0.2  # Temperature
         exp_rating = np.exp(rating)
         prob = exp_rating / np.sum(exp_rating)
+        print(np.sum(exp_rating))
 
         neg = np.random.choice(np.arange(num_item), size=len(pos), p=prob)
         for i in range(len(pos)):
