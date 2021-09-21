@@ -63,8 +63,8 @@ def recall_at_k(actual, predicted, topk):
             true_users += 1
     assert num_users == true_users
     return sum_recall / true_users
-
-def eval(model, sess, train_data, test_data, num_user, num_item):
+    
+def eval(sess, model, train_data, test_data, num_user, num_item):
     user_batch = list(range(num_user))
     predictions = sess.run(model.all_rating, {model.u: user_batch})
 
