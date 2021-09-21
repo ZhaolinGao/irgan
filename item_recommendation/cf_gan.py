@@ -231,9 +231,9 @@ def main():
 
     print("load model...")
     param = pickle.load(open(workdir + "/model_dns.pkl", 'rb'))
-    generator = GEN(num_item, num_user, args.emb_dim, lamda=0.0 / args.batch_size, param=param, initdelta=args.init_delta,
+    generator = GEN(num_item, num_user, args.emb_dim, lamda=1e-4, param=param, initdelta=args.init_delta,
                     learning_rate=0.001)
-    discriminator = DIS(num_item, num_user, args.emb_dim, lamda=0.1 / args.batch_size, param=None, initdelta=args.init_delta,
+    discriminator = DIS(num_item, num_user, args.emb_dim, lamda=1e-4, param=None, initdelta=args.init_delta,
                         learning_rate=0.001)
 
     config = tf.ConfigProto()
